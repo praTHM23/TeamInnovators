@@ -10,6 +10,7 @@ class WebSockets {
             this.users.push({
                 socketId: client.id,
                 userId: userId,
+            
             });
         });
         // subscribe person to chat & other user as well
@@ -35,4 +36,4 @@ class WebSockets {
         });
     }
 }
-module.exports = new WebSockets();
+module.exports = new WebSockets()
