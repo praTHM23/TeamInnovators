@@ -17,6 +17,9 @@ exports.login = async (req, res) => {
     const data = {
         email: _username
     }
+    // console.log(data)
+    // let result = await User.findOne(data).lean();
+    //     console.log(result)
 
     try {
         let result = await User.findOne(data).lean();
@@ -24,10 +27,12 @@ exports.login = async (req, res) => {
         if (result) {
             //compare passwords 
             if (!(bcrypt.compareSync(_password, result.passwordHash))) {
-                res.status(httpStatusCodes[500].code)
-                    .json(formResponse(httpStatusCodes[500].code, {
-                        message: "Invalid Username or Password. Please try again"
-                    }));
+                // res.status(httpStatusCodes[500].code)
+                //     .json(formResponse(httpStatusCodes[500].code, {
+                //         message: "Invalid Username or Password. Please try again"
+            // }));
+                res.send("Invalid Username or Password. Please try again")
+                    
             } else {
                 const jwt = jwtHelper.generateJwtToken(result._id);
                 const userData = (({ _id, passwordHash, ...generalDetails }) => ({ ...generalDetails }))(result);//The _id and password properties are listed before the spread operator ... this means that they are being destructured and removed from the object.
@@ -38,27 +43,30 @@ exports.login = async (req, res) => {
 
                 };
 
-                res.status(httpStatusCodes[200].code)
-                    .json(formResponse(httpStatusCodes[200].code, response));
+                // res.status(httpStatusCodes[200].code)
+                //     .json(formResponse(httpStatusCodes[200].code, response));
+                res.status(200).send("success")
             }
         } else {
-            res.status(httpStatusCodes[404].code)
-                .json(formResponse(httpStatusCodes[404].code, {
-                    message: "Account cannot be found. Try signing up"
-                }));
+            // res.status(httpStatusCodes[404].code)
+            //     .json(formResponse(httpStatusCodes[404].code, {
+            //         message: "Account cannot be found. Try signing up"
+            //     }));
+            res.status(404).send("Account cannot be found. Try signing up")
         }
     } catch (err) {
         console.log(err)
-        handleError(err, methodName, modelName);
-        res.status(httpStatusCodes[500].code)
-            .json(formResponse(httpStatusCodes[500].code, {
-                message: "Your request could not be processed at this time"
-            }));
-    }
+        // handleError(err, methodName, modelName);
+        // res.status(httpStatusCodes[500].code)
+        //     .json(formResponse(httpStatusCodes[500].code, {
+        //         message: "Your request could not be processed at this time"
+    //         }));
+    // }
+    res.send(err)
 }
 
-
-exports.register = async (req, res) => {
+}
+exports.register = async (req, res) => { 
 
     const ipOb = {
         email: req.body.username,
@@ -68,10 +76,11 @@ exports.register = async (req, res) => {
     };
 
     if (!ipOb.email.trim()) {
-        res.status(httpStatusCodes[404].code)
-            .json(formResponse(httpStatusCodes[404].code, {
-                message: "Email is invalid. Try again."
-            }));
+        // res.status(httpStatusCodes[404].code)
+        //     .json(formResponse(httpStatusCodes[404].code, {
+        //         message: "Email is invalid. Try again."
+        //     }));
+        res.status(404).send("Email is invalid. Try again.")
         return;
     }
 
@@ -85,10 +94,11 @@ exports.register = async (req, res) => {
         let result = await User.findOne(data).lean();
         if (result) {
             await session.abortTransaction();
-            res.status(httpStatusCodes[400].code)
-                .json(formResponse(httpStatusCodes[400].code, {
-                    message: "User already exists. Try login"
-                }));
+            // res.status(httpStatusCodes[400].code)
+            //     .json(formResponse(httpStatusCodes[400].code, {
+            //         message: "User already exists. Try login"
+            //     }));
+            res.status(400).send("User already exists. Try login")
             return;
         }
         ipOb.passwordHash = await bcrypt.hash(req.body.password, 10);
@@ -99,26 +109,28 @@ exports.register = async (req, res) => {
 
         console.log(createResult)
         if (createResult) {
-            res.status(httpStatusCodes[200].code)
-                .json(formResponse(httpStatusCodes[200].code, {
-                    message: "Account created successfully",
-                    redirect: true
-                }));
+            // res.status(httpStatusCodes[200].code)
+            //     .json(formResponse(httpStatusCodes[200].code, {
+            //         message: "Account created successfully",
+            //         redirect: true
+            //     }));
+            res.status(200).send("account created")
         }
         else {
             await session.abortTransaction();
-            res.status(httpStatusCodes[500].code)
-                .json(formResponse(httpStatusCodes[500].code, {
-                    message: "Account cannot be created at this time."
-                }));
+            // res.status(httpStatusCodes[500].code)
+            //     .json(formResponse(httpStatusCodes[500].code, {
+            //         message: "Account cannot be created at this time."
+            //     }));
+            res.status(500).send("account cannot be created")
             return;
         }
     } catch (err) {
         await session.abortTransaction();
-        res.status(httpStatusCodes[500].code)
-            .json(formResponse(httpStatusCodes[500].code, {
-                message: "Your request could not be processed at this time"
-            }));
+        // res.status(httpStatusCodes[500].code)
+        //     .json(formResponse(httpStatusCodes[500].code, {
+        //         message: "Your request could not be processed at this time"
+        //     }));
+        res.send(err)
     }
-
 }

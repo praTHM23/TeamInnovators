@@ -10,9 +10,13 @@ const apiRoutes = require('./routes/index')
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 const { application } = require('express');
 const webSockets = require('./helpers/webSockets');
 const app = express();
+
+
+const fileUpload= require('express-fileupload');
 
 console.log(`NODE_ENV=${process.env.NODE_ENV}`);
 
@@ -25,6 +29,11 @@ app.use("/api/v1/", apiRoutes)
 app.get('/api/v1/', (req, res) => {
     res.send('Welcome to the home page of WORKIT!')
 })
+
+
+app.use(fileUpload({
+    useTempFiles: true
+}))
 // const server = app.listen(process.env.PORT, () => {
 //     console.log(`App listening on port ${process.env.PORT}`);
 // });
