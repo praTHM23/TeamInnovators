@@ -47,8 +47,8 @@ const userSchema = new Schema({
         default: ""
     },
     dob: {
-        type: Number,
-        default: null
+        type: String,
+        default: ""
     },
     chat_users: {
         type: [Schema.Types.ObjectId],
