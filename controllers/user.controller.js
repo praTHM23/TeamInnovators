@@ -27,7 +27,11 @@ exports.getUsers = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     console.log(req.body);
+    
+    console.log(req.file);
+    
     // check if the user profile is there in mongodb if yes delete it
+   
     const userRecord= await User.findById(req.params.id);
     if(userRecord.profile_pic !=""){
         console.log("image deleted")

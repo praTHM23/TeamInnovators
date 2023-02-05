@@ -21,7 +21,6 @@ exports.addPost = async (req, res) => {
         res.send(err);
       }
 
-
 }
 // delete
 exports.deletePost = async (req, res) => {
@@ -38,7 +37,7 @@ exports.deletePost = async (req, res) => {
 exports.getPost = async (req, res) => {
     console.log(req.params.id)
      try {
-         const post = await Post.findById(req.params.id);
+         const post = await Post.findById(req.params.id).populate('UserID', ['first_name','profile_pic']);
          res.status(200).send(post);
      }
      catch (err){
@@ -49,7 +48,7 @@ exports.getPost = async (req, res) => {
 exports.getPosts = async (req, res) => {
     console.log("get all service")
      try {
-         const post = await Post.find();
+         const post = await Post.find().populate('UserID', ['first_name','profile_pic']);
          res.status(200).send(post);
      }
      catch (err){

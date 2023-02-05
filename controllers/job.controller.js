@@ -48,7 +48,7 @@ exports.deleteJob = async (req, res) => {
 exports.getJob = async (req, res) => {
     console.log(req.params.id)
      try {
-         const job = await Job.findById(req.params.id);
+         const job = await Job.findById(req.params.id).populate('UserID', ['first_name','profile_pic']);
          res.status(200).send(job);
      }
      catch (err){
@@ -59,7 +59,7 @@ exports.getJob = async (req, res) => {
 exports.getJobs = async (req, res) => {
     console.log("get all jobs")
      try {
-         const job = await Job.find();
+         const job = await Job.find().populate('UserID', ['first_name','profile_pic']);
          res.status(200).send(job);
      }
      catch (err){

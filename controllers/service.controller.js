@@ -44,7 +44,7 @@ exports.deleteService = async (req, res) => {
 exports.getService = async (req, res) => {
   console.log(req.params.id);
   try {
-    const service = await Service.findById(req.params.id);
+    const service = await Service.findById(req.params.id).populate('userID', ['first_name','profile_pic']);
     res.status(200).send(service);
   } catch (err) {
     res.send(err);
@@ -55,7 +55,7 @@ exports.getService = async (req, res) => {
 exports.getServices = async (req, res) => {
   console.log("get all service");
   try {
-    const service = await Service.find();
+    const service = await Service.find().populate('userID', ['first_name','profile_pic']);
     res.status(200).send(service);
   } catch (err) {
     res.send(err);
