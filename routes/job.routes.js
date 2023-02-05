@@ -15,6 +15,10 @@ router.get("/:id", async (req, res) => {
     await JobController.getJob(req, res);
 });
 
+router.get("/user/:id", async (req, res) => {
+    await JobController.getUserJobs(req, res);
+});
+
 router.put("/:id", async (req, res) => {
     await JobController.updateJob(req, res);
 });

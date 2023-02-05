@@ -6,6 +6,9 @@ const UserController=require("../controllers/user.controller");
 router.get("/", async (req, res) => {
     await UserController.getUsers(req, res);
 });
+router.get("/:id", async(req,res)=> {
+    await UserController.getUser(req, res);
+});
 router.patch("/:id",upload.single("profile_pic"), async (req, res) => {
     await UserController.updateUser(req, res);
 });

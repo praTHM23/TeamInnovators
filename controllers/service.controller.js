@@ -33,7 +33,7 @@ exports.addService = async (req, res) => {
 exports.deleteService = async (req, res) => {
   console.log("deleted job");
   try {
-    const service = await Service.findOneAndDelete(req.params.id);
+    const service = await Service.findByIdAndDelete(req.params.id);
     res.status(200).send(service);
   } catch (err) {
     res.send(err);
@@ -44,7 +44,7 @@ exports.deleteService = async (req, res) => {
 exports.getService = async (req, res) => {
   console.log(req.params.id);
   try {
-    const service = await Service.findById(req.params.id).populate('userID', ['first_name','profile_pic']);
+    const service = await Service.findById(req.params.id).populate('userID', ['first_name','last_name','profile_pic']);
     res.status(200).send(service);
   } catch (err) {
     res.send(err);
@@ -55,7 +55,7 @@ exports.getService = async (req, res) => {
 exports.getServices = async (req, res) => {
   console.log("get all service");
   try {
-    const service = await Service.find().populate('userID', ['first_name','profile_pic']);
+    const service = await Service.find().populate('userID', ['first_name','last_name','profile_pic']);
     res.status(200).send(service);
   } catch (err) {
     res.send(err);
@@ -71,3 +71,14 @@ exports.updateService = async (req, res) => {
     res.send(err);
   }
 };
+
+ //get services of a particular user
+ exports.getUserServices= async (req, res) => {
+    
+  try {
+      const services = await Service.find({userID:req.params.id});
+      res.status(200).send(services);
+     }
+     catch (err){
+         res.send(err);
+     }}  

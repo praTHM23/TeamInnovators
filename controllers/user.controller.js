@@ -22,46 +22,69 @@ exports.getUsers = async (req, res) => {
       res.send(err);
     }
   };
-
+//get
+exports.getUser = async (req, res) => {
+    console.log(req.params.id)
+     try {
+         const post = await User.findById(req.params.id);
+         res.status(200).send(post);
+     }
+     catch (err){
+         res.send(err);
+     }}
 //update
 exports.updateUser = async (req, res) => {
   try {
-    console.log(req.body);
-    
-    console.log(req.file);
-    
-    // check if the user profile is there in mongodb if yes delete it
-   
-    const userRecord= await User.findById(req.params.id);
-    if(userRecord.profile_pic !=""){
-        console.log("image deleted")
-      
-        cloudinary.uploader.destroy(req.body.email, (error, result) => {
-            if (error) {
-              console.error(error);
-            } else {
-              console.log(result);
-            }
-          });
-        
+  
+    if(req.file== undefined){
+        const updateUser= {
+            first_name:req.body.first_name,
+            last_name:req.body.last_name,
+            mobile:req.body.mobile,
+            shortBio:req.body.shortBio,
+            longBio:req.body.longBio,
+            gender:req.body.gender,
+            city:req.body.city,
+            state:req.body.state,
+            dob:req.body.dob,
+            chat_users:req.body.chat_users
     }
-    // Upload image to cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path,  { public_id: req.body.email });
-
-    const updateUser= {
-        first_name:req.body.first_name,
-        last_name:req.body.last_name,
-        mobile:req.body.mobile,
-        profile_pic:result.secure_url,
-        shortBio:req.body.shortBio,
-        longBio:req.body.longBio,
-        gender:req.body.gender,
-        city:req.body.city,
-        state:req.body.state,
-        dob:req.body.dob,
-        chat_users:req.body.chat_users
-}
     const user = await User.findByIdAndUpdate(req.params.id,  updateUser);
+    }
+    else{
+        const userRecord= await User.findById(req.params.id);
+        // check if the user profile is there in mongodb if yes delete it
+      if(userRecord.profile_pic !=""){
+          console.log("image deleted")
+        
+          cloudinary.uploader.destroy(req.body.email, (error, result) => {
+              if (error) {
+                console.error(error);
+              } else {
+                console.log(result);
+              }
+  
+            });
+          
+      }
+        // Upload image to cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path,  { public_id: req.body.email });
+      const updateUser= {
+          first_name:req.body.first_name,
+          last_name:req.body.last_name,
+          mobile:req.body.mobile,
+          profile_pic:result.secure_url,
+          shortBio:req.body.shortBio,
+          longBio:req.body.longBio,
+          gender:req.body.gender,
+          city:req.body.city,
+          state:req.body.state,
+          dob:req.body.dob,
+          chat_users:req.body.chat_users
+  }
+      const user = await User.findByIdAndUpdate(req.params.id,  updateUser);
+    }
+    
     const updatedRecord= await User.findById(req.params.id);
     console.log("updated")
     res.status(200).send(updatedRecord);

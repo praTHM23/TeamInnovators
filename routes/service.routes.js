@@ -15,6 +15,10 @@ router.get("/:id", async (req, res) => {
     await ServiceController.getService(req, res);
 });
 
+router.get("/user/:id", async (req, res) => {
+    await ServiceController.getUserServices(req, res);
+});
+
 router.put("/:id", async (req, res) => {
     await ServiceController.updateService(req, res);
 });

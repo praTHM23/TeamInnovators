@@ -16,6 +16,10 @@ router.get("/:id", async (req, res) => {
     await PostController.getPost(req, res);
 });
 
+router.get("/user/:id", async (req, res) => {
+    await PostController.getUserPosts(req, res);
+});
+
 router.put("/:id", async (req, res) => {
     await PostController.updatePost(req, res);
 });

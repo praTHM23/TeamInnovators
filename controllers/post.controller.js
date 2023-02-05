@@ -24,9 +24,10 @@ exports.addPost = async (req, res) => {
 }
 // delete
 exports.deletePost = async (req, res) => {
-    console.log("deleted post")
+    console.log(req.params.id)
      try {
-         const post = await Post.findOneAndDelete(req.params.id);
+         const post = await Post.findByIdAndDelete(req.params.id);
+
          res.status(200).send(post);
      }
      catch (err){
@@ -37,7 +38,7 @@ exports.deletePost = async (req, res) => {
 exports.getPost = async (req, res) => {
     console.log(req.params.id)
      try {
-         const post = await Post.findById(req.params.id).populate('UserID', ['first_name','profile_pic']);
+         const post = await Post.findById(req.params.id).populate('UserID', ['first_name','last_name','profile_pic']);
          res.status(200).send(post);
      }
      catch (err){
@@ -48,7 +49,7 @@ exports.getPost = async (req, res) => {
 exports.getPosts = async (req, res) => {
     console.log("get all service")
      try {
-         const post = await Post.find().populate('UserID', ['first_name','profile_pic']);
+         const post = await Post.find().populate('UserID', ['first_name','last_name','profile_pic']);
          res.status(200).send(post);
      }
      catch (err){
@@ -65,3 +66,13 @@ exports.updatePost = async (req, res) => {
             res.send(err);
         }}
    
+ //get posts of a particular user
+ exports.getUserPosts= async (req, res) => {
+    
+     try {
+         const posts = await Post.find({UserID:req.params.id});
+         res.status(200).send(posts);
+        }
+        catch (err){
+            res.send(err);
+        }}   

@@ -37,7 +37,7 @@ exports.addJob = async (req, res) => {
 exports.deleteJob = async (req, res) => {
     console.log("deleted job")
      try {
-         const job = await Job.findOneAndDelete(req.params.id);
+         const job = await Job.findByIdAndDelete(req.params.id);
          res.status(200).send(job);
      }
      catch (err){
@@ -48,7 +48,7 @@ exports.deleteJob = async (req, res) => {
 exports.getJob = async (req, res) => {
     console.log(req.params.id)
      try {
-         const job = await Job.findById(req.params.id).populate('UserID', ['first_name','profile_pic']);
+         const job = await Job.findById(req.params.id).populate('UserID', ['first_name','last_name','profile_pic']);
          res.status(200).send(job);
      }
      catch (err){
@@ -59,7 +59,7 @@ exports.getJob = async (req, res) => {
 exports.getJobs = async (req, res) => {
     console.log("get all jobs")
      try {
-         const job = await Job.find().populate('UserID', ['first_name','profile_pic']);
+         const job = await Job.find().populate('UserID', ['first_name','last_name','profile_pic']);
          res.status(200).send(job);
      }
      catch (err){
@@ -75,4 +75,14 @@ exports.updateJob = async (req, res) => {
         catch (err){
             res.send(err);
         }}
-   
+ 
+ //get jobs of a particular user
+ exports.getUserJobs= async (req, res) => {
+    
+    try {
+        const jobs = await Job.find({UserID:req.params.id});
+        res.status(200).send(jobs);
+       }
+       catch (err){
+           res.send(err);
+       }}           
