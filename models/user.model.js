@@ -1,36 +1,36 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
+
     first_name: {
         type: String,
         required: true
     },
     last_name: {
         type: String,
+        required: true
     },
-    email: {
+    dob: {
         type: String,
-        required: true,
-        unique: true
-    },
-    passwordHash: {
-        type: String,
-        required: true,
-        minlength: 8
+        default: ""
     },
     mobile: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
+        unique: true,
+        index: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        index: true
     },
     profile_pic: {
         type: String,
         default: ""
     },
-    shortBio: {
-        type: String,
-        default: ""
-    },
-    longBio: {
+    bio: {
         type: String,
         default: ""
     },
@@ -38,22 +38,24 @@ const userSchema = new Schema({
         type: String,
         default: ""
     },
-    city: {
+    address: {
         type: String,
-        default: ""
+        default: "",
     },
     state: {
         type: String,
-        default: ""
+        default: "Goa"
     },
-    dob: {
+    role: {
         type: String,
-        default: ""
-    },
-    chat_users: {
-        type: [Schema.Types.ObjectId],
-        ref: "user"
+        enum: ["customer", "service_provider"],
+        default: "",
     }
-},{timestamps:true});
+    ,
+    skills: {
+        type: [String],
+        default: null,
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model("user", userSchema);
