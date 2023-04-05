@@ -6,7 +6,6 @@ require("./config/db/mongo");
 const socketio = require("socket.io")
 //api route
 const apiRoutes = require('./routes/index')
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -16,7 +15,7 @@ const webSockets = require('./helpers/webSockets');
 const app = express();
 
 
-const fileUpload= require('express-fileupload');
+const fileUpload = require('express-fileupload');
 
 console.log(`NODE_ENV=${process.env.NODE_ENV}`);
 
@@ -25,8 +24,8 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
-app.use("/api/v1/", apiRoutes)
-app.get('/api/v1/', (req, res) => {
+app.use("/", apiRoutes)
+app.get('/home', (req, res) => {
     res.send('Welcome to the home page of WORKIT!')
 })
 

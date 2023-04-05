@@ -17,8 +17,8 @@ exports.login = async (req, res) => {
   try {
     console.log(req.mobile)
     const ipObj = req.mobile;
-    const user = await User.findOne({ ipObj });
-
+    const user = await User.findOne({ mobile: req.mobile });
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: 'User not found try Resgistering!' });
     }
@@ -30,27 +30,24 @@ exports.login = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 }
-exports.register = async (req, res) => {
 
-  console.log(req.uid, req.mobile, req.role, req.body.first_name, req.body.last_name)
+exports.register = async (req, res) => {
+  console.log(req.uid, req.mobile, req.body.first_name, req.body.last_name);
   try {
     const ipObj = {
-
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      role: req.role,
+      full_name: req.body.full_name,
+      role: req.body.role,
       mobile: req.mobile
+    };
+    const user = await User.create(ipObj); // create a new user and store it in a variable
+
+    if (!user) { // if user is not created, send a 404 error response
+      return res.status(404).json({ message: 'User not Registered' });
     }
-    User.create(ipObj).then(() => {
-      return res.status(201).json({ message: 'User Registerd successfully' });
-    }).catch(error => {
-      console.error(error);
-      return res.status(400).json({ message: 'User has not been Register' });
-    });
-  }
-  catch (error) {
+
+    return res.status(201).json({ message: 'User registered successfully', user }); // send the user data in the response
+  } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
-
 };

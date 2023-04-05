@@ -2,13 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
 
-    first_name: {
+    full_name: {
         type: String,
-        required: true
-    },
-    last_name: {
-        type: String,
-        required: true
+        required: true,
     },
     dob: {
         type: String,
@@ -23,8 +19,9 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        unique: true,
-        index: true
+        // unique: true,
+        index: true,
+        default: "",
     },
     profile_pic: {
         type: String,
