@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const admin = require('firebase-admin');
-const serviceAccount = require('../helpers/workit-auth-firebase-adminsdk-zdnlr-770c142f63.json');
+const serviceAccount = require('../helpers/workit-auth-7bde7-firebase-adminsdk-gybks-733dd5bfad.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
