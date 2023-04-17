@@ -2,15 +2,26 @@ const Form = require('../models/form.model');
 const cloudinary = require('../helpers/cloudinaryUpload')
 
 exports.createForm = async (req, res) => {
-    const { name, email } = req.body;
     try {
-        const picture = await cloudinary.uploader.upload(req.file.path, {
-            resource_type: 'auto'
-        });
+        if (Object.keys(req.body).length === 0 && !req.file) {
+            return res.status(404).json({ message: 'Request body and file both are empty' });
+        }
+
+        const { name, email } = req.body;
+        let picObj = {
+
+        }
+        if (req.file != undefined) {
+            const picture = await cloudinary.uploader.upload(req.file.path, {
+                resource_type: 'auto'
+            });
+            picObj['photo'] = picture.secure_url;
+
+        }
         const form = await Form.create({
             name,
             email,
-            photo: picture.secure_url
+            ...picObj
         });
         res.status(201).json(form);
     } catch (error) {
