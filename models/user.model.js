@@ -13,7 +13,7 @@ const userSchema = new Schema({
     mobile: {
         type: String,
         default: "",
-        required: true,
+        required: false,
         unique: true,
         index: true
     },
@@ -22,37 +22,37 @@ const userSchema = new Schema({
         // unique: true,
         index: true,
         default: "",
-    },
-    profile_pic: {
-        type: String,
-        default: ""
-    },
-    bio: {
-        type: String,
-        default: ""
-    },
-    gender: {
-        type: String,
-        default: ""
-    },
-    address: {
-        type: String,
-        default: "",
-    },
-    state: {
-        type: String,
-        default: "Goa"
-    },
-    role: {
-        type: String,
-        enum: ["customer", "service_provider"],
-        default: "",
     }
-    ,
-    skills: {
-        type: [String],
-        default: null,
-    }
+    // profile_pic: {
+    //     type: String,
+    //     default: ""
+    // },
+    // bio: {
+    //     type: String,
+    //     default: ""
+    // },
+    // gender: {
+    //     type: String,
+    //     default: ""
+    // },
+    // address: {
+    //     type: String,
+    //     default: "",
+    // },
+    // state: {
+    //     type: String,
+    //     default: "Goa"
+    // },
+    // role: {
+    //     type: String,
+    //     enum: ["customer", "service_provider"],
+    //     default: "",
+    // }
+    // ,
+    // skills: {
+    //     type: [String],
+    //     default: null,
+    // }
 }, { timestamps: true });
 
 module.exports = mongoose.model("user", userSchema);
