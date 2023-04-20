@@ -30,7 +30,7 @@ const rideSchema = new Schema({
         required: false
     }
     ,
-    time: { type: Date, default: Date.now },
+    time: { type: String, required: true },
     otp: {
         type: Number,
         default: null,

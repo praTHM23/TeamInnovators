@@ -9,13 +9,15 @@ exports.createRide = async (req, res) => {
     const source = req.body.source;
     const destination = req.body.destination;
     const availableSeats = req.body.availableSeats;
+    const time = req.body.time;
 
     try {
         const newRide = new Ride({
             userId,
             source,
             destination,
-            availableSeats
+            availableSeats,
+            time
             // otp: null,
             // commuter: {}
         });
@@ -26,7 +28,8 @@ exports.createRide = async (req, res) => {
                 userId: savedRide.userId,
                 source: savedRide.source,
                 destination: savedRide.destination,
-                availableSeats: savedRide.availableSeats
+                availableSeats: savedRide.availableSeats,
+                time: savedRide.time
             }
         });
     } catch (err) {
