@@ -12,7 +12,13 @@ const rideSchema = new Schema({
         coordinates: {
             type: [Number],
             required: true
-        }
+        },
+        add_source: {
+            type: String,
+            required: false,
+            default: ""
+        },
+
     },
     destination: {
         type: {
@@ -23,6 +29,11 @@ const rideSchema = new Schema({
         coordinates: {
             type: [Number],
             required: true
+        },
+        add_destination: {
+            type: String,
+            required: false,
+            default: ""
         }
     },
     availableSeats: {

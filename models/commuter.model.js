@@ -12,7 +12,12 @@ const commuterSchema = new Schema({
         coordinates: {
             type: [Number],
             required: true
-        }
+        },
+        add_source: {
+            type: String,
+            required: false,
+            default: ""
+        },
     },
     c_destination: {
         type: {
@@ -23,7 +28,13 @@ const commuterSchema = new Schema({
         coordinates: {
             type: [Number],
             required: true
-        }
+        },
+        add_destination: {
+            type: String,
+            required: false,
+            default: ""
+        },
+
     },
     amount_offered: {
         type: Number,
