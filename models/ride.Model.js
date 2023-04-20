@@ -33,18 +33,21 @@ const rideSchema = new Schema({
     time: { type: Date, default: Date.now },
     otp: {
         type: Number,
+        default: null,
+        required: false
     },
     commuter: {
         commuter_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'commuter_route',
-        }
+            required: false
+        },
 
     }
 
 });
 
 rideSchema.index({ source: '2dsphere', destination: '2dsphere' });
-const ride = mongoose.model('ride_route', driverSchema);
+const ride = mongoose.model('ride_route', rideSchema);
 
 module.exports = ride;

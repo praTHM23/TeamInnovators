@@ -4,6 +4,7 @@ const router = express.Router();
 const { decode } = require('../helpers/jwt')
 
 const authRoutes = require("./auth.routes")
+const rideRoutes = require("../routes/ride.routes");
 // const chatRoutes = require('./chatroom.routes')
 // const jobRoutes = require("./job.routes")
 // const serviceRoutes = require("./service.routes")
@@ -19,6 +20,7 @@ router.use("/auth", authRoutes);
 // router.use("/service", serviceRoutes)
 // router.use("/post", postRoutes)
 router.use("/user", userRoutes);
+router.use("/ride", rideRoutes)
 //all apis will come here
 router.use("/form", formRoutes)
 
