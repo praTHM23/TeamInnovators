@@ -23,8 +23,8 @@ exports.verifyUser = (req, res, next) => {
         .then((decodedToken) => {
             console.log(decodedToken)
             req.uid = decodedToken.uid; // Save the user ID to the request object
-            req.email = decodedToken.uid;
-            req.name = decodedToken.name;
+
+            req.mobile = decodedToken.phone_number;
 
             // Save the user ID to the request object
             next(); // Continue to the next middleware or route handler

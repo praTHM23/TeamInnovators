@@ -36,31 +36,10 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser=async(req,res)=>{
   try{
-    console.log(req.params.id)
-  
 
-    if (Object.keys(req.body).length === 0 && !req.file) {
-      return res.status(404).json({ message: 'Request body and file both are empty' });
-    }
-
-      let userDocs={
-
-      }
-      console.log(req.file)
-      if(req.file!=undefined)
-      {
-        const profilePic= await cloudinary.uploader.upload(req.file.path,{
-          resource_type: "auto"
-      })
-      userDocs["profile_pic"]=profilePic.secure_url
-
-      }
-      console.log(userDocs)
-    
-     
+      console.log(req.body.role)
       const updatedUser=await User.findByIdAndUpdate(req.params.id,{
-        ...req.body,
-        ...userDocs
+        role:req.body.role
       })
     if(!updatedUser)
     {
@@ -71,6 +50,42 @@ exports.updateUser=async(req,res)=>{
         const data=await User.findById(req.params.id)
         return res.status(200).json({ Updaeteduser: data });
     }
+      
+    // console.log(req.params.id)
+  
+
+    // if (Object.keys(req.body).length === 0 && !req.file) {
+    //   return res.status(404).json({ message: 'Request body and file both are empty' });
+    // }
+
+    //   let userDocs={
+
+    //   }
+    //   console.log(req.file)
+    //   if(req.file!=undefined)
+    //   {
+    //     const profilePic= await cloudinary.uploader.upload(req.file.path,{
+    //       resource_type: "auto"
+    //   })
+    //   userDocs["profile_pic"]=profilePic.secure_url
+
+    //   }
+    //   console.log(userDocs)
+    
+     
+    //   const updatedUser=await User.findByIdAndUpdate(req.params.id,{
+    //     ...req.body,
+    //     ...userDocs
+    //   })
+    // if(!updatedUser)
+    // {
+    //   return res.status(404).json({ message: 'User not found' });
+    // }
+    // else
+    // {
+    //     const data=await User.findById(req.params.id)
+    //     return res.status(200).json({ Updaeteduser: data });
+    // }
   }
   catch(error){
     console.error(error);

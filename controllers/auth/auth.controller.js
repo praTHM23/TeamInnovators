@@ -72,21 +72,25 @@ exports.login = async (req, res) => {
 // }
 exports.register = async (req, res) => {
   // Extract the decoded user information from req.user
+  console.log(req.body);
   const uid = req.uid;
-  const email = req.email;
-  const displayName = req.name;
+  const email = req.body.email;
+  const displayName = req.body.name;
+  const mobile = req.mobile;
   const db = firebase.firestore();
   // Store the user information in Firebase Cloud Firestore
   db.collection('users').doc(uid).set({
     email: email,
-    full_name: displayName
+    full_name: displayName,
+    mobile: mobile
   })
     .then(() => {
       // Store the user information in MongoDB using Mongoose
       const user = new User({
         uid: uid,
         email: email,
-        full_name: displayName
+        full_name: displayName,
+        mobile: mobile
       });
       user.save()
         .then(() => {
