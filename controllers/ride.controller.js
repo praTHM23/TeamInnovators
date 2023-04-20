@@ -1,4 +1,5 @@
 const Ride = require('../models/ride.Model');
+const Commuter = require('../models/commuter.model')
 const polyline = require('@mapbox/polyline');
 const turf = require('@turf/turf');
 const { createClient } = require('@google/maps');

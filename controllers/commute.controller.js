@@ -33,3 +33,23 @@ exports.getAllCommute = async (req, res) => {
         res.status(500).json({ message: 'Error retrieving rides', error: err });
     }
 }
+
+
+exports.getcommuterById = async (req, res, next) => {
+    console.log(req.params.id);
+    try {
+        const commuterId = req.params.id;
+        const commuter = await Commuter.findOne({ _id: commuterId }).populate('userId');
+
+        if (!commuter) {
+            // return a 404 error if the commuter is not found
+            return res.status(404).json({ message: 'Commuter not found' });
+        }
+
+        // return the commuter document if found
+        res.status(200).json({ commuter });
+    } catch (error) {
+        // handle any errors that may occur
+        next(error);
+    }
+}
