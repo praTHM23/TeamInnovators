@@ -11,13 +11,13 @@ const googleMapsClient = createClient({
 
 exports.createRide = async (req, res) => {
     console.log("hello from create rides\n")
-    const userId = req.body.userId;
-    const source = req.body.source;
-    const destination = req.body.destination;
-    const availableSeats = req.body.availableSeats;
-    const time = req.body.time;
 
     try {
+        const userId = req.body.userId;
+        const source = req.body.source;
+        const destination = req.body.destination;
+        const availableSeats = req.body.availableSeats;
+        const time = req.body.time;
         const newRide = new Ride({
             userId,
             source,
