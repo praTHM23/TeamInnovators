@@ -128,7 +128,7 @@ exports.updateRideWithCommuter = async (req, res, next) => {
             { $set: { commuter: { commuter_id: commuterId } } },
             { new: true }
         );
-        const updateride = await Ride.findById(rideId).populate('userId')
+        const updateride = await Ride.findById(rideId).populate('userId commuter.commuter_id')
         res.status(200).json({ message: 'Ride updated successfully', ride: updateride });
     } catch (error) {
         next(error);
