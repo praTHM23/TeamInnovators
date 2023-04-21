@@ -134,3 +134,27 @@ exports.updateRideWithCommuter = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.generateRideOTP = async (req, res, next) => {
+    console.log("hello from otp")
+    console.log(req.param.id)
+    // const UserId = req.params.id;
+    const otp = Math.floor(Math.random() * 10000); // generate 4-digit OTP
+
+    try {
+        const ride_details = await Ride.findOne({
+            userId: req.param.id,
+            completed: false,
+        })
+        console.log(ride_details)
+        const rideId = ride_details._id
+        const ride = await Ride.findByIdAndUpdate(
+            rideId,
+            { $set: { otp: otp } },
+            { new: true }
+        );
+        res.status(200).json({ message: 'OTP generated', otp: otp });
+    } catch (error) {
+        next(error);
+    }
+};

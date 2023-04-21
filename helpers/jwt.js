@@ -1,7 +1,7 @@
 
 
 const admin = require('firebase-admin');
-const serviceAccount = require('../helpers/hackathon-3efbd-firebase-adminsdk-i7von-a0668c61bc.json');
+const serviceAccount = require('../helpers/hackathon2-ba994-firebase-adminsdk-k8jqy-f7c24a0a68.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });

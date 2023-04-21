@@ -59,6 +59,13 @@ const rideSchema = new Schema({
         },
 
     },
+    cargo: {
+        cargo_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Cargo',
+            required: false
+        }
+    }
 
 });
 
