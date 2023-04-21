@@ -37,7 +37,7 @@ const commuterSchema = new Schema({
 
     },
     amount_offered: {
-        type: Number,
+        type: String,
         require: true,
     },
 
