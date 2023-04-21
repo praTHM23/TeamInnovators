@@ -30,6 +30,15 @@ const cargoSchema = new Schema({
     required: true,
     default: false,
   },
+  time: {
+    type: String,
+    required: true,
+
+  },
+  amount_offered: {
+    type: String,
+    required: true
+  }
 });
 
 cargoSchema.index({ source: '2dsphere', destination: '2dsphere' });

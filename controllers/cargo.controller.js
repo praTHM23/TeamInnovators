@@ -14,7 +14,8 @@ exports.storeCargoRoute = async (req, res, next) => {
                 req.body.destination.latitude,
             ],
         },
-
+        time: req.body.time,
+        amount_offered: req.body.amount_offered
     });
 
     try {
