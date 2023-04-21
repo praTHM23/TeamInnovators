@@ -1,4 +1,4 @@
-const Cargo = require('../models/cargo');
+const Cargo = require('../models/cargo.model');
 
 // store new cargo route
 exports.storeCargoRoute = async (req, res, next) => {
@@ -14,7 +14,7 @@ exports.storeCargoRoute = async (req, res, next) => {
                 req.body.destination.latitude,
             ],
         },
-        photo: req.body.photo,
+
     });
 
     try {

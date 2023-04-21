@@ -24,10 +24,7 @@ const cargoSchema = new Schema({
       required: true,
     },
   },
-  photo: {
-    type: String,
-    required: true,
-  },
+
   delivered: {
     type: Boolean,
     required: true,

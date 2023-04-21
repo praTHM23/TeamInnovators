@@ -6,6 +6,7 @@ const { decode } = require('../helpers/jwt')
 const authRoutes = require("./auth.routes")
 const rideRoutes = require("../routes/ride.routes");
 const commuteRoutes = require("../routes/commute.routes")
+const cargoRoutes = require('../routes/cargo.routes')
 // const chatRoutes = require('./chatroom.routes')
 // const jobRoutes = require("./job.routes")
 // const serviceRoutes = require("./service.routes")
@@ -23,6 +24,7 @@ router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
 router.use("/ride", rideRoutes)
 router.use("/commute", commuteRoutes);
+router.use('/cargo', cargoRoutes);
 //all apis will come here
 router.use("/form", formRoutes)
 
