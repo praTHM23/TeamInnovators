@@ -4,13 +4,14 @@ exports.createCommuter = async (req, res, next) => {
 
     console.log("Hello from create commute")
     try {
-        const { userId, c_source, c_destination, amount_offered } = req.body;
+        const { userId, c_source, c_destination, amount_offered, time } = req.body;
 
         const newCommuter = new Commuter({
             userId,
             c_source,
             c_destination,
             amount_offered,
+            time,
         });
 
         const savedCommuter = await newCommuter.save();

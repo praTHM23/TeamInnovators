@@ -41,7 +41,7 @@ const commuterSchema = new Schema({
         require: true,
     },
 
-    time: { type: Date, default: Date.now },
+    time: { type: String, default: "" },
 
 });
 

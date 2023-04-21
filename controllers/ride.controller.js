@@ -137,13 +137,13 @@ exports.updateRideWithCommuter = async (req, res, next) => {
 
 exports.generateRideOTP = async (req, res, next) => {
     console.log("hello from otp")
-    console.log(req.param.id)
+    console.log(req.params.id)
     // const UserId = req.params.id;
     const otp = Math.floor(Math.random() * 10000); // generate 4-digit OTP
 
     try {
         const ride_details = await Ride.findOne({
-            userId: req.param.id,
+            userId: req.params.id,
             completed: false,
         })
         console.log(ride_details)
@@ -154,6 +154,24 @@ exports.generateRideOTP = async (req, res, next) => {
             { new: true }
         );
         res.status(200).json({ message: 'OTP generated', otp: otp });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.verifyRideOTP = async (req, res, next) => {
+    const rideId = req.params.id;
+    const otp = req.body.otp;
+
+    try {
+        const ride = await Ride.findById(rideId);
+        if (!ride) {
+            return res.status(404).json({ message: 'Ride not found' });
+        }
+        if (ride.otp !== otp) {
+            return res.status(401).json({ message: 'OTP verification failed' });
+        }
+        res.status(200).json({ message: 'OTP verified successfully' });
     } catch (error) {
         next(error);
     }
