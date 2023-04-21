@@ -135,44 +135,53 @@ exports.updateRideWithCommuter = async (req, res, next) => {
     }
 };
 
-exports.generateRideOTP = async (req, res, next) => {
-    console.log("hello from otp")
-    console.log(req.params.id)
-    // const UserId = req.params.id;
-    const otp = Math.floor(Math.random() * 10000); // generate 4-digit OTP
+// exports.generateRideOTP = async (req, res, next) => {
+//     console.log("hello from otp")
+//     console.log(req.params.id)
+//     // const UserId = req.params.id;
+//     const otp = Math.floor(Math.random() * 10000); // generate 4-digit OTP
+//     const ride = await Ride.findById(req.params.id)
+//     const commuter_id = ride.commuter.commuter_id;
 
-    try {
-        const ride_details = await Ride.findOne({
-            userId: req.params.id,
-            completed: false,
-        })
-        console.log(ride_details)
-        const rideId = ride_details._id
-        const ride = await Ride.findByIdAndUpdate(
-            rideId,
-            { $set: { otp: otp } },
-            { new: true }
-        );
-        res.status(200).json({ message: 'OTP generated', otp: otp });
-    } catch (error) {
-        next(error);
-    }
-};
+//     const commuterDetails = await Commuter.findById(commuter_id).populate('userId');
+//     try {
 
-exports.verifyRideOTP = async (req, res, next) => {
-    const rideId = req.params.id;
-    const otp = req.body.otp;
+//         const ridId = req.params.id
+//         const ride = await Ride.findByIdAndUpdate(
+//             rideId,
+//             { $set: { otp: otp } },
+//             { new: true }
+//         );
+//         res.status(200).json({ message: 'OTP generated', otp: otp });
+//     } catch (error) {
+//         next(error);
+//     }
+// };
 
-    try {
-        const ride = await Ride.findById(rideId);
-        if (!ride) {
-            return res.status(404).json({ message: 'Ride not found' });
-        }
-        if (ride.otp !== otp) {
-            return res.status(401).json({ message: 'OTP verification failed' });
-        }
-        res.status(200).json({ message: 'OTP verified successfully' });
-    } catch (error) {
-        next(error);
-    }
-};
+// exports.verifyRideOTP = async (req, res, next) => {
+//     const userId = req.params.id;
+//     const otp = req.body.otp;
+
+//     try {
+//         const ride = await Ride.findById(req.params.id)
+//         const commuter_id = ride.commuter.commuter_id;
+
+//         const commuterDetails = await Commuter.findById(commuter_id).populate('userId');
+
+
+
+
+
+//         // const ride = await Ride.findOne({
+//         //     userId: req.params.id,
+//         //     completed: false,
+//         // })
+
+//         // if (ride.otp !== otp) {
+//         //     return res.status(401).json({ message: 'OTP verification failed' });
+//         // }
+//         // res.status(200).json({ message: 'OTP verified successfully' });
+//     } catch (error) {
+//         next(error);
+//     }
+// };
