@@ -2,18 +2,11 @@ const Cargo = require('../models/cargo.model');
 
 // store new cargo route
 exports.storeCargoRoute = async (req, res, next) => {
+    const source = req.body.source;
+    const destination = req.body.destination
     const cargo = new Cargo({
-        source: {
-            type: 'Point',
-            coordinates: [req.body.source.longitude, req.body.source.latitude],
-        },
-        destination: {
-            type: 'Point',
-            coordinates: [
-                req.body.destination.longitude,
-                req.body.destination.latitude,
-            ],
-        },
+        source,
+        destination,
         time: req.body.time,
         amount_offered: req.body.amount_offered
     });
