@@ -111,3 +111,26 @@ exports.getRidebyUserID = async (req, res, next) => {
     }
 };
 
+exports.updateRideWithCommuter = async (req, res, next) => {
+
+    const UserId = req.params.id;
+    const commuterId = req.body.commuter_id;
+
+    try {
+        const ride_details = await Ride.findOne({
+            UserId: req.params.id,
+            completed: false
+        })
+        console.log(ride_details)
+        const rideId = ride_details._id
+        const ride = await Ride.findByIdAndUpdate(
+            rideId,
+            { $set: { commuter: { commuter_id: commuterId } } },
+            { new: true }
+        );
+        const updateride = await Ride.findById(rideId).populate('userId')
+        res.status(200).json({ message: 'Ride updated successfully', ride: updateride });
+    } catch (error) {
+        next(error);
+    }
+};
