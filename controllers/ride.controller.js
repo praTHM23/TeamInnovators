@@ -24,7 +24,8 @@ exports.createRide = async (req, res) => {
             source,
             destination,
             availableSeats,
-            time
+            time,
+
             // otp: null,
             // commuter: {}
         });
@@ -36,7 +37,8 @@ exports.createRide = async (req, res) => {
                 source: savedRide.source,
                 destination: savedRide.destination,
                 availableSeats: savedRide.availableSeats,
-                time: savedRide.time
+                time: savedRide.time,
+                completed: savedRide.completed
             }
         });
     } catch (err) {
@@ -88,4 +90,24 @@ exports.getridesForCommuter = async (req, res, next) => {
 }
 
 
+
+exports.getRidebyUserID = async (req, res, next) => {
+    console.log(req.params.id)
+    try {
+        const ride = await Ride.findOne({
+            UserId: req.params.id,
+            completed: false
+        }).populate('userId')
+        res.status(200).json({
+            message: "you have one active ride!",
+            ride: ride
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: "No active rides!"
+        })
+    }
+};
 

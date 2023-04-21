@@ -3,6 +3,11 @@ const { Schema } = mongoose;
 
 const rideSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'user' },
+    completed: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     source: {
         type: {
             type: String,
@@ -39,8 +44,7 @@ const rideSchema = new Schema({
     availableSeats: {
         type: Number,
         required: false
-    }
-    ,
+    },
     time: { type: String, required: true },
     otp: {
         type: Number,
@@ -54,7 +58,7 @@ const rideSchema = new Schema({
             required: false
         },
 
-    }
+    },
 
 });
 
